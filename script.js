@@ -129,19 +129,33 @@ function resetFilter() {
 function saveImage() {
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
-    canvas.width = previewImg.naturalWidth;
-    canvas.height = previewImg.naturalHeight;
+
+    // Adjust canvas size based on image dimensions and rotation
+    let canvasWidth = previewImg.naturalWidth;
+    let canvasHeight = previewImg.naturalHeight;
+    if (rotate % 180 !== 0) {
+        // Swap width and height if image is rotated 90 or 270 degrees
+        [canvasWidth, canvasHeight] = [canvasHeight, canvasWidth];
+    }
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
 
     ctx.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturation}%) invert(${inversion}%) grayscale(${grayscale}%)`;
     ctx.translate(canvas.width / 2, canvas.height / 2);
     if (rotate !== 0) {
+        // Rotate canvas
         ctx.rotate(rotate * Math.PI / 180);
     }
     ctx.scale(flipHorizontal, flipVertical);
-    ctx.drawImage(previewImg, -canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
+
+    // Adjust drawing position based on rotation
+    const offsetX = -previewImg.naturalWidth / 2;
+    const offsetY = -previewImg.naturalHeight / 2;
+    ctx.drawImage(previewImg, offsetX, offsetY);
 
     const link = document.createElement("a");
     link.download = "image.jpg";
     link.href = canvas.toDataURL();
     link.click();
 }
+
