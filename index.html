@@ -17,18 +17,17 @@
             <div class="editor-panel">
                 <div class="filter">
                     <label class="title">Filters</label>
-                    <div class="options">
-                        <button id="brightness" class="active">Brightness</button>
-                        <button id="saturation">Saturation</button>
-                        <button id="inversion">Inversion</button>
-                        <button id="grayscale">Grayscale</button>
-                    </div>
                     <div class="slider">
-                        <div class="filter-info">
-                            <p class="name">Brighteness</p>
-                            <p class="value">100%</p>
-                        </div>
-                        <input type="range" value="100" min="0" max="200">
+                        <label for="brightness-slider">Brightness</label>
+                        <input id="brightness-slider" type="range" value="100" min="0" max="200">
+                        <label for="contrast-slider">Contrast</label>
+                        <input id="contrast-slider" type="range" value="100" min="0" max="200">
+                        <label for="saturation-slider">Saturation</label>
+                        <input id="saturation-slider" type="range" value="100" min="0" max="200">
+                        <label for="inversion-slider">Inversion</label>
+                        <input id="inversion-slider" type="range" value="0" min="0" max="100">
+                        <label for="grayscale-slider">Grayscale</label>
+                        <input id="grayscale-slider" type="range" value="0" min="0" max="100">
                     </div>
                 </div>
                 <div class="rotate">
