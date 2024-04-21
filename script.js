@@ -32,16 +32,10 @@ contrastSlider.addEventListener("input", updateContrast);
 blurSlider.addEventListener("input", updateBlur);
 sepiaSlider.addEventListener("input", updateSepia);
 
-// Event listener for file input
+// Event listeners for UI Buttons
 fileInput.addEventListener("change", loadImage);
-
-// Event listener for reset filter button
 resetFilterBtn.addEventListener("click", resetFilter);
-
-// Event listener for save image button
 saveImgBtn.addEventListener("click", saveImage);
-
-// Event listener for choose image button
 chooseImgBtn.addEventListener("click", () => fileInput.click());
 
 // Function to load image
@@ -61,31 +55,27 @@ function applyFilter() {
     previewImg.style.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturation}%) invert(${inversion}%) grayscale(${grayscale}%) blur(${blurValue}px) sepia(${sepiaValue}%)`;
 }
 
-// Update brightness value
+// Update slider values
 function updateBrightness() {
     brightness = brightnessSlider.value;
     applyFilter();
 }
 
-// Update saturation value
 function updateSaturation() {
     saturation = saturationSlider.value;
     applyFilter();
 }
 
-// Update inversion value
 function updateInversion() {
     inversion = inversionSlider.value;
     applyFilter();
 }
 
-// Update grayscale value
 function updateGrayscale() {
     grayscale = grayscaleSlider.value;
     applyFilter();
 }
 
-// Update contrast value
 function updateContrast() {
     contrast = contrastSlider.value;
     applyFilter();
@@ -124,6 +114,8 @@ function resetFilter() {
     inversion = "0";
     grayscale = "0";
     contrast = "100";
+    blurValue = "0";
+    sepiaValue = "0";
     rotate = 0;
     flipHorizontal = 1;
     flipVertical = 1;
@@ -134,6 +126,8 @@ function resetFilter() {
     inversionSlider.value = inversion;
     grayscaleSlider.value = grayscale;
     contrastSlider.value = contrast;
+    blurSlider.value = blurValue;
+    sepiaSlider.value = sepiaValue;
 
     // Apply filters
     applyFilter();
@@ -154,7 +148,7 @@ function saveImage() {
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;
 
-    ctx.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturation}%) invert(${inversion}%) grayscale(${grayscale}%)`;
+    ctx.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturation}%) invert(${inversion}%) grayscale(${grayscale}%) blur(${blurValue}px) sepia(${sepiaValue}%)`;
     ctx.translate(canvas.width / 2, canvas.height / 2);
     if (rotate !== 0) {
         // Rotate canvas
