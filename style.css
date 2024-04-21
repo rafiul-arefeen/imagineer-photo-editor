@@ -159,6 +159,7 @@ body {
 
 .wrapper .preview-img {
     flex-grow: 1;
+    margin-right: 10px;
     display: flex;
     width: 70vw;
     height: 75vh;
