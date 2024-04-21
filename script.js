@@ -9,6 +9,8 @@ const previewImg = document.querySelector(".preview-img img");
 const resetFilterBtn = document.querySelector(".reset-filter");
 const chooseImgBtn = document.querySelector(".choose-img");
 const saveImgBtn = document.querySelector(".save-img");
+const cropButton = document.getElementById('cropButton');
+const confirmCropButton = document.getElementById("confirmCropButton");
 
 // Querying slider elements
 const brightnessSlider = document.getElementById("brightness-slider");
@@ -22,6 +24,7 @@ const sepiaSlider = document.getElementById("sepia-slider");
 // Initializing filter settings
 let brightness = "100", saturation = "100", inversion = "0", grayscale = "0", contrast = "100", blurValue = "0", sepiaValue = "0";
 let rotate = 0, flipHorizontal = 1, flipVertical = 1;
+let cropper;
 
 // Event listeners for sliders
 brightnessSlider.addEventListener("input", updateBrightness);
@@ -37,6 +40,8 @@ fileInput.addEventListener("change", loadImage);
 resetFilterBtn.addEventListener("click", resetFilter);
 saveImgBtn.addEventListener("click", saveImage);
 chooseImgBtn.addEventListener("click", () => fileInput.click());
+cropButton.addEventListener("click", openCropOverlay);
+confirmCropButton.addEventListener("click", cropImage)
 
 // Function to load image
 function loadImage() {
@@ -91,6 +96,23 @@ function updateSepia() {
     applyFilter();
 }
 
+function openCropOverlay() {
+    cropper = new Cropper(previewImg, {
+        aspectRatio: 0,
+        viewMode: 2,
+    });
+    confirmCropButton.disabled = false;
+}
+
+function cropImage() {
+    cropper.crop();
+    const croppedCanvas = cropper.getCroppedCanvas();
+    previewImg.src = croppedCanvas.toDataURL();
+    cropper.destroy();
+    cropper = null;
+    confirmCropButton.disabled = true;
+}
+
 // Event listener for rotate options
 rotateOptions.forEach(option => {
     option.addEventListener("click", () => {
@@ -109,6 +131,12 @@ rotateOptions.forEach(option => {
 
 // Reset filter settings to default values
 function resetFilter() {
+    if (cropper) {
+        cropper.destroy();
+        cropper = null;
+        confirmCropButton.disabled = true;
+    }
+
     brightness = "100";
     saturation = "100";
     inversion = "0";

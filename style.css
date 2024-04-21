@@ -54,18 +54,24 @@ body {
     border-radius: 5px;
     border: 1px solid #ccc;
     order: 2;
+    overflow: hidden;
 }
 
-.editor-panel .title {
+.editor-panel .editor-panel-content {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.editor-panel-content .title {
     display: block;
     font-size: 20px;
     margin-bottom: 12px;
 }
 
-.editor-panel .options {
+.editor-panel-content .options {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 .controls {
@@ -74,7 +80,7 @@ body {
     justify-content: space-between;
 }
 
-.editor-panel button {
+.editor-panel-content button {
     outline: none;
     height: 40px;
     font-size: 14px;
@@ -85,11 +91,11 @@ body {
     border: 1px solid #aaa;
 }
 
-.editor-panel .filter button {
+.editor-panel-content .filter button {
     width: calc(100% / 2 - 4px);
 }
 
-.editor-panel button:hover {
+.editor-panel-content button:hover {
     background: #f5f5f5;
 }
 
@@ -116,11 +122,11 @@ body {
     accent-color: #21C3D1;
 }
 
-.editor-panel .rotate {
+.editor-panel-content .rotate {
     margin-top: 17px;
 }
 
-.editor-panel .rotate button {
+.editor-panel-content .rotate button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -133,6 +139,19 @@ body {
 }
 
 .rotate .options button:active {
+    color: #fff;
+    background: #21C3D1;
+    border-color: #21C3D1;
+}
+
+.editor-panel-content .crop button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(100% / 4 - 3px);
+}
+
+.crop .options button:active {
     color: #fff;
     background: #21C3D1;
     border-color: #21C3D1;
@@ -154,7 +173,6 @@ body {
 .preview-img img {
     width: 100%;
     height: 100%;
-    border-radius: 5px;
     object-fit: contain;
 }
 
@@ -189,6 +207,11 @@ body {
     margin-left: 5px;
     background: #ff0000;
     border: 1px solid #ff0000;
+}
+
+#confirmCropButton[disabled] {
+    opacity: 0.5;
+    pointer-events: none;
 }
 
 @media screen and (max-width: 760px) {
