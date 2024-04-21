@@ -160,8 +160,8 @@ body {
 .wrapper .preview-img {
     flex-grow: 1;
     display: flex;
-    max-width: 70vw;
-    max-height: 75vh;
+    width: 70vw;
+    height: 75vh;
     overflow: hidden;
     border-radius: 5px;
     align-items: top;
@@ -214,7 +214,7 @@ body {
     pointer-events: none;
 }
 
-@media screen and (max-width: 760px) {
+/* @media screen and (max-width: 760px) {
     .container {
         padding: 25px;
     }
@@ -245,5 +245,46 @@ body {
 
     .controls .row .save-img {
         margin-left: 0px;
+    }
+} */
+
+@media screen and (orientation: portrait) {
+    .container h2 {
+        text-align: center;
+    }
+
+    .wrapper {
+        flex-direction: column;
+    }
+
+    .wrapper .editor-panel {
+        margin-top: 10px;
+        height: 30vh;
+        width: 100%;
+        order: 2;
+    }
+
+    .wrapper .preview-img {
+        height: 50vh;
+        width: 100%;
+        order: 1;
+    }
+
+    .controls button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .controls .row {
+        order: -1;
+        width: 100%;
+    }
+
+    .controls .row .save-img {
+        margin-left: 0px;
+    }
+
+    .controls .reset-filter {
+        margin-top: 30px;
     }
 }

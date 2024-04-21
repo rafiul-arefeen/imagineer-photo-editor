@@ -97,11 +97,18 @@ function updateSepia() {
 }
 
 function openCropOverlay() {
-    cropper = new Cropper(previewImg, {
-        aspectRatio: 0,
-        viewMode: 2,
-    });
-    confirmCropButton.disabled = false;
+    if (cropper) {
+        cropper.destroy();
+        cropper = null;
+        confirmCropButton.disabled = true;
+    }
+    else {
+        cropper = new Cropper(previewImg, {
+            aspectRatio: 0,
+            viewMode: 2,
+        });
+        confirmCropButton.disabled = false;
+    }
 }
 
 function cropImage() {
