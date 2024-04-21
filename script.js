@@ -16,9 +16,11 @@ const saturationSlider = document.getElementById("saturation-slider");
 const inversionSlider = document.getElementById("inversion-slider");
 const grayscaleSlider = document.getElementById("grayscale-slider");
 const contrastSlider = document.getElementById("contrast-slider");
+const blurSlider = document.getElementById("blur-slider");
+const sepiaSlider = document.getElementById("sepia-slider");
 
 // Initializing filter settings
-let brightness = "100", saturation = "100", inversion = "0", grayscale = "0", contrast = "100";
+let brightness = "100", saturation = "100", inversion = "0", grayscale = "0", contrast = "100", blurValue = "0", sepiaValue = "0";
 let rotate = 0, flipHorizontal = 1, flipVertical = 1;
 
 // Event listeners for sliders
@@ -27,6 +29,8 @@ saturationSlider.addEventListener("input", updateSaturation);
 inversionSlider.addEventListener("input", updateInversion);
 grayscaleSlider.addEventListener("input", updateGrayscale);
 contrastSlider.addEventListener("input", updateContrast);
+blurSlider.addEventListener("input", updateBlur);
+sepiaSlider.addEventListener("input", updateSepia);
 
 // Event listener for file input
 fileInput.addEventListener("change", loadImage);
@@ -54,7 +58,7 @@ function loadImage() {
 // Function to apply filter
 function applyFilter() {
     previewImg.style.transform = `rotate(${rotate}deg) scale(${flipHorizontal}, ${flipVertical})`;
-    previewImg.style.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturation}%) invert(${inversion}%) grayscale(${grayscale}%)`;
+    previewImg.style.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturation}%) invert(${inversion}%) grayscale(${grayscale}%) blur(${blurValue}px) sepia(${sepiaValue}%)`;
 }
 
 // Update brightness value
@@ -84,6 +88,16 @@ function updateGrayscale() {
 // Update contrast value
 function updateContrast() {
     contrast = contrastSlider.value;
+    applyFilter();
+}
+
+function updateBlur() {
+    blurValue = blurSlider.value;
+    applyFilter();
+}
+
+function updateSepia() {
+    sepiaValue = sepiaSlider.value;
     applyFilter();
 }
 

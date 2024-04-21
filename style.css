@@ -20,7 +20,7 @@ body {
 .container {
     height: 95vh;
     width: 95vw;
-    padding: 30px 30px 30px;
+    padding: 25px 25px 25px;
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
@@ -44,6 +44,7 @@ body {
     display: flex;
     margin: 20px 0;
     min-height: 335px;
+    justify-content: space-between;
 }
 
 .wrapper .editor-panel {
@@ -143,7 +144,6 @@ body {
     max-width: 70vw;
     max-height: 75vh;
     overflow: hidden;
-    margin-left: 5px;
     border-radius: 5px;
     align-items: top;
     justify-content: center;
