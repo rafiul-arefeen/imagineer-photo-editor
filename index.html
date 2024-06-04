@@ -21,41 +21,47 @@
     <div class="container disable">
         <h2>Imagineer | Photo Editor with AI</h2>
         <div class="wrapper">
-            <div class="editor-panel">
-                <div class="editor-panel-content">
-                    <div class="crop">
-                        <label class="title">Crop</label>
-                        <div class="options">
-                            <button id="cropButton"><i class="fa-solid fa-crop"></i></button>
-                            <button id="confirmCropButton" disabled>Crop</button>
+            <div class="editor-container">
+                <div class="top-row">
+                    <button class="general-panel active">General</button>
+                    <button class="ai-panel">AI</button>
+                </div>
+                <div class="editor-panel">
+                    <div class="editor-panel-content">
+                        <div class="crop">
+                            <label class="title">Crop</label>
+                            <div class="options">
+                                <button id="cropButton"><i class="fa-solid fa-crop"></i></button>
+                                <button id="confirmCropButton" disabled>Crop</button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="filter">
-                        <label class="title">Filters</label>
-                        <div class="slider">
-                            <label for="brightness-slider">Brightness</label>
-                            <input id="brightness-slider" type="range" value="100" min="0" max="200">
-                            <label for="contrast-slider">Contrast</label>
-                            <input id="contrast-slider" type="range" value="100" min="0" max="200">
-                            <label for="saturation-slider">Saturation</label>
-                            <input id="saturation-slider" type="range" value="100" min="0" max="200">
-                            <label for="inversion-slider">Inversion</label>
-                            <input id="inversion-slider" type="range" value="0" min="0" max="100">
-                            <label for="grayscale-slider">Grayscale</label>
-                            <input id="grayscale-slider" type="range" value="0" min="0" max="100">
-                            <label for="blur-slider">Blur</label>
-                            <input id="blur-slider" type="range" value="0" min="0" max="10">
-                            <label for="sepia-slider">Sepia</label>
-                            <input id="sepia-slider" type="range" value="0" min="0" max="100">
+                        <div class="filter">
+                            <label class="title">Filters</label>
+                            <div class="slider">
+                                <label for="brightness-slider">Brightness</label>
+                                <input id="brightness-slider" type="range" value="100" min="0" max="200">
+                                <label for="contrast-slider">Contrast</label>
+                                <input id="contrast-slider" type="range" value="100" min="0" max="200">
+                                <label for="saturation-slider">Saturation</label>
+                                <input id="saturation-slider" type="range" value="100" min="0" max="200">
+                                <label for="inversion-slider">Inversion</label>
+                                <input id="inversion-slider" type="range" value="0" min="0" max="100">
+                                <label for="grayscale-slider">Grayscale</label>
+                                <input id="grayscale-slider" type="range" value="0" min="0" max="100">
+                                <label for="blur-slider">Blur</label>
+                                <input id="blur-slider" type="range" value="0" min="0" max="10">
+                                <label for="sepia-slider">Sepia</label>
+                                <input id="sepia-slider" type="range" value="0" min="0" max="100">
+                            </div>
                         </div>
-                    </div>
-                    <div class="rotate">
-                        <label class="title">Rotate & Flip</label>
-                        <div class="options">
-                            <button id="left"><i class="fa-solid fa-rotate-left"></i></button>
-                            <button id="right"><i class="fa-solid fa-rotate-right"></i></button>
-                            <button id="horizontal"><i class='bx bx-reflect-vertical'></i></button>
-                            <button id="vertical"><i class='bx bx-reflect-horizontal'></i></button>
+                        <div class="rotate">
+                            <label class="title">Rotate & Flip</label>
+                            <div class="options">
+                                <button id="left"><i class="fa-solid fa-rotate-left"></i></button>
+                                <button id="right"><i class="fa-solid fa-rotate-right"></i></button>
+                                <button id="horizontal"><i class='bx bx-reflect-vertical'></i></button>
+                                <button id="vertical"><i class='bx bx-reflect-horizontal'></i></button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -75,6 +81,7 @@
     </div>
 
     <script src="script.js"></script>
+    <script src="togglePanels.js"></script>
 
 </body>
 

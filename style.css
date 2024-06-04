@@ -47,13 +47,52 @@ body {
     justify-content: space-between;
 }
 
-.wrapper .editor-panel {
-    padding: 15px 20px;
+.container .wrapper .editor-container {
+    display: flex;
+    flex-direction: column;
     width: 280px;
     height: 75vh;
+    justify-content: space-between;
+    order: 2;
+}
+
+.editor-container .top-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.editor-container .top-row button {
+    padding: 11px 20px;
+    font-size: 14px;
+    border-radius: 3px;
+    outline: none;
+    color: #000000;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    border-style: none;
+    width: 135px;
+}
+
+.top-row .general-panel:hover {
+    color: white;
+}
+
+.top-row .ai-panel:hover {
+    color: white;
+}
+
+.active {
+    background-color: #ff9d00;
+}
+
+.wrapper .editor-panel {
+    padding: 15px 20px;
+    /* height: 75vh; */
     border-radius: 5px;
     border: 1px solid #ccc;
-    order: 2;
     overflow: hidden;
 }
 

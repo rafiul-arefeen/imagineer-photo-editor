@@ -106,6 +106,7 @@ function openCropOverlay() {
         cropper = new Cropper(previewImg, {
             aspectRatio: 0,
             viewMode: 2,
+            rotatable: true,
         });
         confirmCropButton.disabled = false;
     }
@@ -201,4 +202,3 @@ function saveImage() {
     link.href = canvas.toDataURL();
     link.click();
 }
-
