@@ -290,6 +290,7 @@ SETTINGS FOR MASKING MENU
     border-radius: 5px;
     border: 1px solid #ccc;
     overflow: hidden;
+    overflow-y: auto;
 }
 
 .masking-panel .title {
