@@ -65,6 +65,38 @@
                         </div>
                     </div>
                 </div>
+                <div class="ai-menu">
+                    <div class="ai-button">
+                        <button class="masking-button">Masking</button>
+                        <button class="style-transfer-button">Style Transfer</button>
+                    </div>
+                    <div class="chat-window">
+                        This is the chat window.
+                    </div>
+                </div>
+                <div class="masking-panel">
+                    <label class="title">Masking</label>
+                    <div class="masking-button">
+                        <button class="mask-subject-button">Mask Subject</button>
+                        <button class="mask-background-button">Mask Background</button>
+                    </div>
+                    <div class="slider">
+                        <label for="brightness-slider">Brightness</label>
+                        <input id="brightness-slider" type="range" value="100" min="0" max="200">
+                        <label for="contrast-slider">Contrast</label>
+                        <input id="contrast-slider" type="range" value="100" min="0" max="200">
+                        <label for="saturation-slider">Saturation</label>
+                        <input id="saturation-slider" type="range" value="100" min="0" max="200">
+                        <label for="inversion-slider">Inversion</label>
+                        <input id="inversion-slider" type="range" value="0" min="0" max="100">
+                        <label for="grayscale-slider">Grayscale</label>
+                        <input id="grayscale-slider" type="range" value="0" min="0" max="100">
+                        <label for="blur-slider">Blur</label>
+                        <input id="blur-slider" type="range" value="0" min="0" max="10">
+                        <label for="sepia-slider">Sepia</label>
+                        <input id="sepia-slider" type="range" value="0" min="0" max="100">
+                    </div>
+                </div>
             </div>
             <div class="preview-img">
                 <img id="placeholder-img" src="/images/placeholder.png" alt="preview-img">
