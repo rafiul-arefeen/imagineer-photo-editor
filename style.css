@@ -352,6 +352,64 @@ SETTINGS FOR MASKING MENU
     accent-color: #21C3D1;
 }
 
+/*
+
+STYLE TRANSFER SETTINGS
+
+*/
+.editor-container .style-transfer-panel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 15px 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    overflow: hidden;
+}
+
+.style-transfer-panel .title {
+    display: block;
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+
+.style-transfer-panel .style-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.style-transfer-panel button {
+    padding: 11px 20px;
+    font-size: 14px;
+    border-radius: 3px;
+    outline: none;
+    color: #fff;
+    cursor: pointer;
+    background: none;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    border-style: none;
+}
+
+.style-button .add-style-image-button {
+    background-color: #684c00;
+    margin-bottom: 10px;
+}
+
+.style-button .add-style-image-button:hover {
+    background-color: #6C757D;
+}
+
+.style-button .apply-button:hover {
+    background-color: #6C757D;
+}
+
+.style-button .apply-button {
+    background-color: #ffae00;
+    margin-bottom: 10px;
+}
+
 .controls button {
     padding: 11px 20px;
     font-size: 14px;
@@ -402,6 +460,10 @@ HIDING PANELS AT LAUNCH
 }
 
 .container.disable .masking-panel {
+    display: none;
+}
+
+.container.disable .style-transfer-panel {
     display: none;
 }
 

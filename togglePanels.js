@@ -1,6 +1,7 @@
 const generalButton = document.querySelector('.general-panel');
 const aiButton = document.querySelector('.ai-panel');
 const maskingButton = document.querySelector('.masking-button');
+const styleTransferButton = document.querySelector('.style-transfer-button');
 
 const editorPanelContent = document.querySelector('.editor-panel-content');
 
@@ -9,6 +10,7 @@ generalButton.addEventListener('click', () => {
     aiButton.classList.remove('active');
     editorPanelContent.dataset.activePanel = 'general';
     hideMaskingPanel();
+    hideStyleTransferPanel();
     hideAIPanel();
     showGeneralPanel();
 });
@@ -19,7 +21,13 @@ aiButton.addEventListener('click', () => {
     editorPanelContent.dataset.activePanel = 'ai';
     hideGeneralPanel();
     hideMaskingPanel();
+    hideStyleTransferPanel();
     showAIPanel();
+});
+
+styleTransferButton.addEventListener('click', () => {
+    hideAIPanel();
+    showStyleTransferPanel();
 });
 
 maskingButton.addEventListener('click', () => {
@@ -55,4 +63,14 @@ function showMaskingPanel() {
 function hideMaskingPanel() {
     const maskingPanel = document.querySelector('.masking-panel');
     maskingPanel.style.display = 'none';
+}
+
+function showStyleTransferPanel() {
+    const styleTransferPanel = document.querySelector('.style-transfer-panel');
+    styleTransferPanel.style.display = 'block';
+}
+
+function hideStyleTransferPanel() {
+    const styleTransferPanel = document.querySelector('.style-transfer-panel');
+    styleTransferPanel.style.display = 'none';
 }
