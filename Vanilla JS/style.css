@@ -69,16 +69,17 @@ body {
     margin-bottom: 10px;
 }
 
-.editor-container .top-row button {
+.editor-container .top-row button 
+{
     padding: 11px 20px;
-    font-size: 14px;
     border-radius: 3px;
     outline: none;
-    color: #000000;
-    cursor: pointer;
+    font-size: 14px;
     transition: all 0.3s ease;
     text-transform: uppercase;
     border-style: none;
+    color: #000000;
+    cursor: pointer;
     width: 135px;
 }
 
@@ -94,12 +95,14 @@ body {
     background-color: #ff9d00;
 }
 
-.wrapper .editor-panel {
+.wrapper .editor-panel 
+{
     padding: 15px 20px;
-    border-radius: 5px;
     border: 1px solid #ccc;
+    border-radius: 5px;
     overflow: hidden;
 }
+
 
 .editor-panel .editor-panel-content {
     height: 100%;
@@ -107,8 +110,8 @@ body {
 }
 
 .editor-panel-content .title {
-    display: block;
     font-size: 20px;
+    display: block;
     margin-bottom: 12px;
 }
 
@@ -124,15 +127,16 @@ body {
     justify-content: space-between;
 }
 
-.editor-panel-content button {
-    outline: none;
+.editor-panel-content button 
+{
     height: 40px;
-    font-size: 14px;
-    color: #6C757D;
-    background: #fff;
-    border-radius: 3px;
     margin-bottom: 8px;
+    font-size: 14px;
+    outline: none;
     border: 1px solid #aaa;
+    border-radius: 3px;
+    color: #6C757D;
+    background: 1px solid #aaa;;
 }
 
 .editor-panel-content .filter button {
