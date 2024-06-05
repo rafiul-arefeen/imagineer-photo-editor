@@ -23,7 +23,6 @@ body
     background: #E3F2FD;
     justify-content: center;
 
-
 }
 
 .container 
@@ -43,7 +42,7 @@ body
 .container.disable .editor-panel,
 .container.disable .controls .reset-filter,
 .container.disable .controls .save-img
- {
+{
     opacity: 0.5;
     pointer-events: none;
 }
@@ -86,6 +85,7 @@ body
 .editor-container .top-row button 
 {
     padding: 11px 20px;
+    width: 135px;
     border-radius: 3px;
     outline: none;
     font-size: 14px;
@@ -94,7 +94,6 @@ body
     border-style: none;
     color: #000000;
     cursor: pointer;
-    width: 135px;
 }
 
 .top-row .general-panel:hover 
@@ -107,7 +106,8 @@ body
     color: white;
 }
 
-.active {
+.active 
+{
     background-color: #ff9d00;
 }
 
@@ -161,7 +161,7 @@ body
 
 .editor-panel-content .filter button
  {
-    width: calc(100% / 2 - 4px);
+    width: calc(100%/2-4px);
 }
 
 .editor-panel-content button:hover
@@ -195,8 +195,8 @@ body
 
 .filter .slider input 
 {
-    width: 100%;
     height: 5px;
+    width: 100%;
     accent-color: #21C3D1;
 }
 
@@ -208,9 +208,9 @@ body
 .editor-panel-content .rotate button 
 {
     display: flex;
+    width: calc(100%/4-3px);
     align-items: center;
     justify-content: center;
-    width: calc(100% / 4 - 3px);
 }
 
 
@@ -233,9 +233,9 @@ body
 .editor-panel-content .crop button 
 {
     display: flex;
+    width: calc(100%/4-3px);
     align-items: center;
     justify-content: center;
-    width: calc(100% / 4 - 3px);
 }
 
 .crop .options button:active
@@ -286,8 +286,8 @@ body
 .editor-container .ai-menu 
 {
     display: flex;
-    height: 100%;
     padding: 15px 20px;
+    height: 100%;
     border: 1px solid #ccc;
     border-radius: 5px;
     overflow: hidden;
@@ -304,14 +304,15 @@ body
 {
     padding: 11px 20px;
     font-size: 14px;
+    border-style: none;
     border-radius: 3px;
     outline: none;
+    background: none;
     color: #fff;
     cursor: pointer;
-    background: none;
     transition: all 0.3s ease;
     text-transform: uppercase;
-    border-style: none;
+
 }
 
 .ai-menu .masking-button 
@@ -548,8 +549,9 @@ body
 
 #confirmCropButton[disabled] 
 {
-    pointer-events:none;
     opacity: 0.5;
+    pointer-events:none;
+    
 }
 
 
@@ -574,6 +576,8 @@ body
     display: none;
 }
 
+
+/* portrait */
 
 @media screen and (orientation: portrait) 
 {

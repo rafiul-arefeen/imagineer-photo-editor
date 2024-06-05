@@ -55,54 +55,67 @@ function loadImage() {
 }
 
 // Function to apply filter
-function applyFilter() {
+function applyFilter() 
+{
     previewImg.style.transform = `rotate(${rotate}deg) scale(${flipHorizontal}, ${flipVertical})`;
     previewImg.style.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturation}%) invert(${inversion}%) grayscale(${grayscale}%) blur(${blurValue}px) sepia(${sepiaValue}%)`;
 }
 
 // Update slider values
-function updateBrightness() {
+
+function updateBrightness() 
+{
     brightness = brightnessSlider.value;
     applyFilter();
 }
 
-function updateSaturation() {
+
+function updateSaturation() 
+{
     saturation = saturationSlider.value;
     applyFilter();
 }
 
-function updateInversion() {
+function updateInversion() 
+{
     inversion = inversionSlider.value;
     applyFilter();
 }
 
-function updateGrayscale() {
+function updateGrayscale() 
+{
     grayscale = grayscaleSlider.value;
     applyFilter();
 }
 
-function updateContrast() {
+function updateContrast() 
+{
     contrast = contrastSlider.value;
     applyFilter();
 }
 
-function updateBlur() {
+function updateBlur() 
+{
     blurValue = blurSlider.value;
     applyFilter();
 }
 
-function updateSepia() {
+function updateSepia() 
+{
     sepiaValue = sepiaSlider.value;
     applyFilter();
 }
 
-function openCropOverlay() {
-    if (cropper) {
+function openCropOverlay() 
+{
+    if (cropper) 
+    {
         cropper.destroy();
         cropper = null;
         confirmCropButton.disabled = true;
     }
-    else {
+    else 
+    {
         cropper = new Cropper(previewImg, {
             aspectRatio: 0,
             viewMode: 2,
@@ -112,7 +125,8 @@ function openCropOverlay() {
     }
 }
 
-function cropImage() {
+function cropImage() 
+{
     cropper.crop();
     const croppedCanvas = cropper.getCroppedCanvas();
     previewImg.src = croppedCanvas.toDataURL();
@@ -121,7 +135,9 @@ function cropImage() {
     confirmCropButton.disabled = true;
 }
 
-// Event listener for rotate options
+
+// Event listener for rotating options
+
 rotateOptions.forEach(option => {
     option.addEventListener("click", () => {
         if (option.id === "left") {
@@ -137,8 +153,10 @@ rotateOptions.forEach(option => {
     });
 });
 
-// Reset filter settings to default values
-function resetFilter() {
+// Reset filter settings for default values
+
+function resetFilter()
+ {
     if (cropper) {
         cropper.destroy();
         cropper = null;
@@ -165,12 +183,13 @@ function resetFilter() {
     blurSlider.value = blurValue;
     sepiaSlider.value = sepiaValue;
 
-    // Apply filters
     applyFilter();
 }
 
+
 // Function to save image
-function saveImage() {
+function saveImage() 
+{
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
 
