@@ -366,11 +366,13 @@ body {
 /*
 ///////////STYLE TRANSFER SETTINGS//////////
 */
+
+
 .editor-container .style-transfer-panel {
     display: flex;
     flex-direction: column;
-    height: 100%;
     padding: 15px 20px;
+    height: 100%;
     border-radius: 5px;
     border: 1px solid #ccc;
     overflow: hidden;
@@ -378,8 +380,8 @@ body {
 
 .style-transfer-panel .title {
     display: block;
-    font-size: 20px;
     margin-bottom: 12px;
+    font-size: 20px;
 }
 
 .style-transfer-panel .style-button {
@@ -390,15 +392,15 @@ body {
 
 .style-transfer-panel button {
     padding: 11px 20px;
-    font-size: 14px;
     border-radius: 3px;
+    font-size: 14px;
     outline: none;
     color: #fff;
-    cursor: pointer;
-    background: none;
     transition: all 0.3s ease;
     text-transform: uppercase;
     border-style: none;
+    cursor: pointer;
+    background: none;
 }
 
 .style-button .add-style-image-button {
@@ -421,14 +423,16 @@ body {
 
 .controls button {
     padding: 11px 20px;
-    font-size: 14px;
     border-radius: 3px;
+    font-size: 14px;
     outline: none;
     color: #fff;
     cursor: pointer;
-    background: none;
+    background:none;
     transition: all 0.3s ease;
     text-transform: uppercase;
+
+
 }
 
 .controls .reset-filter {
@@ -448,13 +452,13 @@ body {
 
 .controls .save-img {
     margin-left: 5px;
-    background: #ff0000;
     border: 1px solid #ff0000;
+    background: #ff0000;
 }
 
 #confirmCropButton[disabled] {
+    pointer-events:none;
     opacity: 0.5;
-    pointer-events: none;
 }
 
 
@@ -477,19 +481,20 @@ body {
 
 @media screen and (orientation: portrait) 
 {
-    .container h2 {
+    .container h2 
+    {
         text-align: center;
     }
-
-    .wrapper {
+    .wrapper 
+    {
         flex-direction: column;
     }
 
     .wrapper .editor-panel {
-        margin-top: 10px;
         height: 30vh;
         width: 100%;
         order: 2;
+        margin-top: 10px;
     }
 
     .wrapper .preview-img {
