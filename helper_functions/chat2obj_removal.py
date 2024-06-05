@@ -1,160 +1,52 @@
-from ultralytics import YOLO
 import cv2
 import numpy as np
+from ultralytics import YOLO
 from openai import OpenAI
 from json import loads
 
+# Initialize the OpenAI client and model
 llm_client = OpenAI(api_key="api-key")
 llm_model = "gpt-3.5-turbo-0125"
 user_prompt = None
+img_src = None
 
 label_list = [
-        "person",
-        "bicycle",
-        "car",
-        "motorcycle",
-        "airplane",
-        "bus",
-        "train",
-        "truck",
-        "boat",
-        "traffic light",
-        "fire hydrant",
-        "stop sign",
-        "parking meter",
-        "bench",
-        "bird",
-        "cat",
-        "dog",
-        "horse",
-        "sheep",
-        "cow",
-        "elephant",
-        "bear",
-        "zebra",
-        "giraffe",
-        "backpack",
-        "umbrella",
-        "handbag",
-        "tie",
-        "suitcase",
-        "frisbee",
-        "skis",
-        "snowboard",
-        "sports ball",
-        "kite",
-        "baseball bat",
-        "baseball glove",
-        "skateboard",
-        "surfboard",
-        "tennis racket",
-        "bottle",
-        "wine glass",
-        "cup",
-        "fork",
-        "knife",
-        "spoon",
-        "bowl",
-        "banana",
-        "apple",
-        "sandwich",
-        "orange",
-        "broccoli",
-        "carrot",
-        "hot dog",
-        "pizza",
-        "donut",
-        "cake",
-        "chair",
-        "couch",
-        "potted plant",
-        "bed",
-        "dining table",
-        "toilet",
-        "tv",
-        "laptop",
-        "mouse",
-        "remote",
-        "keyboard",
-        "cell phone",
-        "microwave",
-        "oven",
-        "toaster",
-        "sink",
-        "refrigerator",
-        "book",
-        "clock",
-        "vase",
-        "scissors",
-        "teddy bear",
-        "hair drier",
-        "toothbrush"
-    ]
+    "person", "bicycle", "car", "motorcycle", "airplane", "bus", "train", "truck", "boat", "traffic light", "fire hydrant", "stop sign",
+    "parking meter", "bench", "bird", "cat", "dog", "horse", "sheep", "cow", "elephant", "bear", "zebra", "giraffe", "backpack", "umbrella",
+    "handbag", "tie", "suitcase", "frisbee", "skis", "snowboard", "sports ball", "kite", "baseball bat", "baseball glove", "skateboard",
+    "surfboard", "tennis racket", "bottle", "wine glass", "cup", "fork", "knife", "spoon", "bowl", "banana", "apple", "sandwich", "orange",
+    "broccoli", "carrot", "hot dog", "pizza", "donut", "cake", "chair", "couch", "potted plant", "bed", "dining table", "toilet", "tv",
+    "laptop", "mouse", "remote", "keyboard", "cell phone", "microwave", "oven", "toaster", "sink", "refrigerator", "book", "clock", "vase",
+    "scissors", "teddy bear", "hair drier", "toothbrush"
+]
+
 def detect_and_save(query, model_path="yolov8n.pt", image_path="person.png"):
-    # Load a model
-    model = YOLO(model_path)  # pretrained YOLOv8n model
+    model = YOLO(model_path)
     label_names = label_list
 
-    def predict():
-        # Run inference on the image
-        results = model(image_path)  # return a list of Results objects
+    results = model(image_path)
 
-        # Process results list
-        for result in results:
-            boxes = result.boxes  # Boxes object for bounding box outputs
-            class_label = int(boxes.cls[0])
-            box = list(boxes.xywh)
-            if query == label_names[class_label]:
-                x, y, w, h = box[0]
-                return int(x), int(y), int(w), int(h)
-
-    return predict()
-
+    for result in results:
+        boxes = result.boxes
+        class_label = int(boxes.cls[0])
+        box = list(boxes.xywh)
+        if query == label_names[class_label]:
+            x, y, w, h = box[0]
+            return int(x), int(y), int(w), int(h)
+    return None, None, None, None
 
 def create_transparent_rectangle(image_path, x, y, w, h, output_path):
-    """
-    Creates a transparent rectangle on an image and saves the result.
-
-    Parameters:
-    - image_path: Path to the input image.
-    - x, y: Top-left coordinates of the rectangle.
-    - w, h: Width and height of the rectangle.
-    - output_path: Path to save the output image.
-    """
-    # Load the image
     image = cv2.imread(image_path)
-
-    # Create a black mask with the same size as the image
     mask = np.zeros((image.shape[0], image.shape[1]), dtype=np.uint8)
-
-    # Draw rectangle on the mask
     cv2.rectangle(mask, (x - w // 2, y - h // 2), (x + w // 2, y + h // 2), 255, -1)
-
-    # Ensure mask has uint8 data type and invert it
     mask = mask.astype(np.uint8)
     mask = cv2.bitwise_not(mask)
-
-    # Convert the image to BGRA to add an alpha channel
     result = cv2.cvtColor(image, cv2.COLOR_BGR2BGRA)
-
-    # Apply bitwise manipulation to create transparency
     result = cv2.bitwise_and(result, result, mask=mask)
-
-    # Save the result
     cv2.imwrite(output_path, result)
     print(f"Image with transparent rectangle saved as '{output_path}'")
 
-
 def edit_image_with_openai(image_path, mask_path, prompt, output_size="512x512"):
-    """
-    Edits the image using OpenAI's image API.
-
-    Parameters:
-    - image_path: Path to the input image.
-    - mask_path: Path to the mask image.
-    - prompt: Text prompt for the editing.
-    - output_size: Size of the output image.
-    """
     response = llm_client.images.edit(
         image=open(image_path, "rb"),
         mask=open(mask_path, "rb"),
@@ -162,19 +54,41 @@ def edit_image_with_openai(image_path, mask_path, prompt, output_size="512x512")
         n=1,
         size=output_size
     )
-
-    # Process and save the response
     print(response)
     return response.data[0].url
 
-
 def get_object_info(data):
-    global user_prompt
+    global user_prompt, img_src
     print(user_prompt)
     query_obj = data.get("object_name")
     x, y, w, h = detect_and_save(query_obj)
-    create_transparent_rectangle('person.png', x, y, w, h, 'transparent_image.png')
-    return edit_image_with_openai('person.png', 'transparent_image.png', user_prompt)
+    if x is not None and y is not None and w is not None and h is not None:
+        create_transparent_rectangle(img_src, x, y, w, h, 'transparent_image.png')
+        return edit_image_with_openai(img_src, 'transparent_image.png', user_prompt)
+    else:
+        return "Object not found in the image."
+
+# def refine_prompt(user_content):
+#     system_prompt = "Your task is to refine the prompt by excluding the name of the object and retaining the rest of the user's prompt."
+#     response = llm_client.chat.completions.create(
+#         model="gpt-4",
+#         messages=[
+#             {"role": "system", "content": system_prompt},
+#             {"role": "user", "content": user_content}
+#         ]
+#     )
+#     return response.choices[0].message.content
+
+def refine_prompt(user_content):
+    system_prompt = "Your task is to extract the first sentence of the user's prompt."
+    response = llm_client.chat.completions.create(
+        model="gpt-4",
+        messages=[
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_content}
+        ]
+    )
+    return response.choices[0].message.content
 
 
 func_tools = [
@@ -197,7 +111,6 @@ func_tools = [
     }
 ]
 
-
 def ask_gpt(models=llm_model, history=None, tool_option="auto", tool_list=None):
     response = llm_client.chat.completions.create(
         model=models,
@@ -211,12 +124,13 @@ def ask_gpt(models=llm_model, history=None, tool_option="auto", tool_list=None):
     else:
         return response.choices[0].message
 
-
 message_history = []
 
-def predict(user_question):
-    global user_prompt
-    user_prompt = user_question
+def predict(image, user_question):
+    global user_prompt, img_src
+    img_src = image
+    user_prompt = refine_prompt(user_question)
+    print(user_prompt)
     message_history.append({'role': 'user', 'content': user_question})
     response = ask_gpt(models=llm_model, history=message_history, tool_list=func_tools)
     if response.tool_calls:
@@ -230,9 +144,7 @@ def predict(user_question):
         print("Arguments", function_args)
         function_response = function_to_call(function_args)
         if function_response is not None:
-            return function_response
-
-
+            return {"data_url":function_response,"reply": "The image transformation has been applied"}
 
 # Example of Chat Usage
-print(predict("Fill with the surrounding background locating the person"))
+print(predict("person.png", "Fill with the surrounding background of the image. The object name to be replaced is the person"))
