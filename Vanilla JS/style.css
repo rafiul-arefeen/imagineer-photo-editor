@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
+
+
+/* Style for all elements */
+
 * {
     font-family:  'Poppins', sans-serif;
     box-sizing: border-box;
@@ -7,9 +11,10 @@
     padding: 0;
 }
 
-body {
- 
+/* for body elements */
 
+body 
+{
     display: flex;
     margin: 0;
     padding: 0;
@@ -21,7 +26,8 @@ body {
 
 }
 
-.container {
+.container 
+{
     height: 95vh;
     width: 95vw;
     padding: 25px 25px 25px;
@@ -31,27 +37,34 @@ body {
     overflow: auto;
 }
 
+
+/* styles to disabled elements */
+
 .container.disable .editor-panel,
 .container.disable .controls .reset-filter,
-.container.disable .controls .save-img {
+.container.disable .controls .save-img
+ {
     opacity: 0.5;
     pointer-events: none;
 }
 
-.container h2 {
+.container h2
+ {
     font-size:22px;
     font-weight:500;
     margin-top: -8px;
 }
 
-.container .wrapper {
+.container .wrapper 
+{
     display: flex;
     margin: 20px 0;
     min-height: 335px;
     justify-content: space-between;
 }
 
-.container .wrapper .editor-container {
+.container .wrapper .editor-container 
+{
 
     display: flex;
     flex-direction: column;
@@ -62,7 +75,8 @@ body {
 
 }
 
-.editor-container .top-row {
+.editor-container .top-row 
+{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -83,11 +97,13 @@ body {
     width: 135px;
 }
 
-.top-row .general-panel:hover {
+.top-row .general-panel:hover 
+{
     color: white;
 }
 
-.top-row .ai-panel:hover {
+.top-row .ai-panel:hover 
+{
     color: white;
 }
 
@@ -104,24 +120,28 @@ body {
 }
 
 
-.editor-panel .editor-panel-content {
+.editor-panel .editor-panel-content 
+{
     height: 100%;
     overflow-y: auto;
 }
 
-.editor-panel-content .title {
+.editor-panel-content .title 
+{
     font-size: 20px;
     display: block;
     margin-bottom: 12px;
 }
 
-.editor-panel-content .options {
+.editor-panel-content .options 
+{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
 }
 
-.controls {
+.controls 
+{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -139,87 +159,116 @@ body {
     background: 1px solid #aaa;;
 }
 
-.editor-panel-content .filter button {
+.editor-panel-content .filter button
+ {
     width: calc(100% / 2 - 4px);
 }
 
-.editor-panel-content button:hover {
+.editor-panel-content button:hover
+ {
     background: #f5f5f5;
 }
 
-.filter button.active {
+.filter button.active 
+{
+
     color: #fff;
     border-color: #21C3D1;
     background: #21C3D1;
 }
 
-.filter .slider {
+.filter .slider 
+{
     margin-top: 12px;
 }
 
-.filter .slider .filter-info {
+
+/* filter within the slider */
+
+.filter .slider .filter-info 
+{
     display: flex;
     color: #464646;
     font-size: 14px;
     justify-content: space-between;
 }
 
-.filter .slider input {
+.filter .slider input 
+{
     width: 100%;
     height: 5px;
     accent-color: #21C3D1;
 }
 
-.editor-panel-content .rotate {
+.editor-panel-content .rotate 
+{
     margin-top: 17px;
 }
 
-.editor-panel-content .rotate button {
+.editor-panel-content .rotate button 
+{
     display: flex;
     align-items: center;
     justify-content: center;
     width: calc(100% / 4 - 3px);
 }
 
+
+/* third and fourth buttons */
+
+
 .rotate .options button:nth-child(3),
-.rotate .options button:nth-child(4) {
+.rotate .options button:nth-child(4) 
+{
     font-size: 18px;
 }
 
-.rotate .options button:active {
+.rotate .options button:active 
+{
     color: #fff;
     background: #21C3D1;
     border-color: #21C3D1;
 }
 
-.editor-panel-content .crop button {
+.editor-panel-content .crop button 
+{
     display: flex;
     align-items: center;
     justify-content: center;
     width: calc(100% / 4 - 3px);
 }
 
-.crop .options button:active {
+.crop .options button:active
+ {
     color: #fff;
     background: #21C3D1;
     border-color: #21C3D1;
 }
 
-.wrapper .preview-img {
-    flex-grow: 1;
-    margin-right: 10px;
+/* preview image */
+
+.wrapper .preview-img 
+{
+
     display: flex;
-    width: 70vw;
     height: 75vh;
-    overflow: hidden;
+    width: 70vw;
+    margin-right: 10px;
+    flex-grow: 1;
+    border: 1px solid #ccc;
     border-radius: 5px;
+    overflow: hidden;
     align-items: top;
     justify-content: center;
-    border: 1px solid #ccc;
     order: 1;
 }
 
-.preview-img img {
+/* within the preview image container */
+
+
+.preview-img img 
+{
+
     height: 100%;
     width: 100%;
     object-fit: contain;
@@ -234,22 +283,25 @@ body {
 
 
 
-.editor-container .ai-menu {
+.editor-container .ai-menu 
+{
     display: flex;
     height: 100%;
     padding: 15px 20px;
-    border-radius: 5px;
     border: 1px solid #ccc;
+    border-radius: 5px;
     overflow: hidden;
 }
 
-.ai-menu .ai-button {
+.ai-menu .ai-button 
+{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
-.ai-menu button {
+.ai-menu button 
+{
     padding: 11px 20px;
     font-size: 14px;
     border-radius: 3px;
@@ -262,25 +314,30 @@ body {
     border-style: none;
 }
 
-.ai-menu .masking-button {
+.ai-menu .masking-button 
+{
     background-color: #21C3D1;
     margin-bottom: 10px;
 }
 
-.ai-button .masking-button:hover {
+.ai-button .masking-button:hover 
+{
     background-color: #6C757D;
 }
 
-.ai-button .style-transfer-button:hover {
+.ai-button .style-transfer-button:hover 
+{
     background-color: #6C757D;
 }
 
-.ai-menu .style-transfer-button {
+.ai-menu .style-transfer-button 
+{
     background-color: #21C3D1;
     margin-bottom: 10px;
 }
 
-.ai-menu .chat-window {
+.ai-menu .chat-window 
+{
     padding: 15px 20px;
     height: 80%;
     border-radius: 5px;
@@ -296,7 +353,8 @@ body {
 
 
 
-.editor-container .masking-panel {
+.editor-container .masking-panel 
+{
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -307,19 +365,22 @@ body {
     overflow-y: auto;
 }
 
-.masking-panel .title {
+.masking-panel .title 
+{
     display: block;
     font-size: 20px;
     margin-bottom: 12px;
 }
 
-.masking-panel .masking-button {
+.masking-panel .masking-button
+ {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
-.masking-panel button {
+.masking-panel button 
+{
     padding: 11px 20px;
     font-size: 14px;
     border-radius: 3px;
@@ -332,38 +393,46 @@ body {
     border-style: none;
 }
 
-.masking-button .mask-subject-button {
+.masking-button .mask-subject-button 
+{
     background-color: #21C3D1;
     margin-bottom: 10px;
 }
 
-.masking-button .mask-subject-button:hover {
+.masking-button .mask-subject-button:hover 
+{
     background-color: #6C757D;
 }
 
-.masking-button .mask-background-button:hover {
+.masking-button .mask-background-button:hover 
+{
     background-color: #6C757D;
 }
 
-.masking-button .mask-background-button {
+.masking-button .mask-background-button
+ {
     background-color: #21C3D1;
     margin-bottom: 10px;
 }
 
-.masking-panel .slider {
+.masking-panel .slider 
+{
     margin-top: 12px;
 }
 
-.masking-panel .slider .filter-info {
+.masking-panel .slider .filter-info
+
+{
     display: flex;
-    color: #464646;
     font-size: 14px;
+    color: #464646;
     justify-content: space-between;
 }
 
-.masking-panel .slider input {
-    width: 100%;
+.masking-panel .slider input 
+{
     height: 5px;
+    width: 100%;
     accent-color: #21C3D1;
 }
 
@@ -372,7 +441,8 @@ body {
 */
 
 
-.editor-container .style-transfer-panel {
+.editor-container .style-transfer-panel 
+{
     display: flex;
     flex-direction: column;
     padding: 15px 20px;
@@ -382,19 +452,23 @@ body {
     overflow: hidden;
 }
 
-.style-transfer-panel .title {
+.style-transfer-panel .title
+ {
     display: block;
     margin-bottom: 12px;
     font-size: 20px;
 }
 
-.style-transfer-panel .style-button {
+.style-transfer-panel .style-button 
+{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
-.style-transfer-panel button {
+.style-transfer-panel button 
+{
+
     padding: 11px 20px;
     border-radius: 3px;
     font-size: 14px;
@@ -407,25 +481,33 @@ body {
     background: none;
 }
 
-.style-button .add-style-image-button {
+
+.style-button .add-style-image-button 
+{
     background-color: #684c00;
     margin-bottom: 10px;
 }
 
-.style-button .add-style-image-button:hover {
+.style-button .add-style-image-button:hover 
+{
     background-color: #6C757D;
 }
 
-.style-button .apply-button:hover {
+.style-button .apply-button:hover 
+{
     background-color: #6C757D;
 }
 
-.style-button .apply-button {
+.style-button .apply-button 
+{
+
     background-color: #ffae00;
     margin-bottom: 10px;
 }
 
-.controls button {
+.controls button 
+{
+
     padding: 11px 20px;
     border-radius: 3px;
     font-size: 14px;
@@ -439,28 +521,33 @@ body {
 
 }
 
-.controls .reset-filter {
+.controls .reset-filter 
+{
     color: #6C757D;
     border: 1px solid #6C757D;
 }
 
-.controls .reset-filter:hover {
+.controls .reset-filter:hover
+ {
     color: #fff;
     background: #6C757D;
 }
 
-.controls .choose-img {
-    background: #6C757D;
+.controls .choose-img 
+{
     border: 1px solid #6C757D;
+    background: #6C757D;
 }
 
-.controls .save-img {
+.controls .save-img 
+{
     margin-left: 5px;
     border: 1px solid #ff0000;
     background: #ff0000;
 }
 
-#confirmCropButton[disabled] {
+#confirmCropButton[disabled] 
+{
     pointer-events:none;
     opacity: 0.5;
 }
@@ -470,15 +557,20 @@ body {
 /////////HIDING PANELS AT LAUNCH//////////
 */
 
-.container.disable .ai-menu {
+/* Hiding AI menu when container is disabled */
+
+.container.disable .ai-menu 
+{
     display: none;
 }
 
-.container.disable .masking-panel {
+.container.disable .masking-panel 
+{
     display: none;
 }
 
-.container.disable .style-transfer-panel {
+.container.disable .style-transfer-panel 
+{
     display: none;
 }
 
@@ -494,17 +586,20 @@ body {
         flex-direction: column;
     }
 
-    .wrapper .editor-panel {
+    .wrapper .editor-panel 
+    {
         height: 30vh;
         width: 100%;
         order: 2;
         margin-top: 10px;
     }
 
-    .wrapper .preview-img {
+    .wrapper .preview-img 
+    {
+        order: 1;
         height: 50vh;
         width: 100%;
-        order: 1;
+
     }
 
     .controls button {
