@@ -17,7 +17,6 @@ const saveImage = () => {
         saturate(${saturation}%)
         invert(${inversion}%)
         grayscale(${grayscale}%)
-        blur(${blur}px)
         sepia(${sepia}%)
     `;
     ctx.translate(canvas.width / 2, canvas.height / 2);
@@ -35,3 +34,6 @@ const saveImage = () => {
     link.href = canvas.toDataURL();
     link.click();
 };
+
+
+export default saveImage;
