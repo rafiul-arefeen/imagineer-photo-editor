@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Cropper from 'cropperjs';
 // import 'cropperjs/dist/cropper.css';
-import saveImage from '../Functions/SaveImage'
-import "../assets/css/PhotoEditor.css"
+import saveImage from '../Functions/SaveImage';
+import "../assets/css/PhotoEditor.css";
 
 const PhotoEditor = () => {
     const [activePanel, setActivePanel] = useState('general');
@@ -17,6 +17,7 @@ const PhotoEditor = () => {
     const [flipHorizontal, setFlipHorizontal] = useState(1);
     const [flipVertical, setFlipVertical] = useState(1);
     const [cropper, setCropper] = useState(null);
+    const [chatInput, setChatInput] = useState('');
 
     const previewImgRef = useRef(null);
     const fileInputRef = useRef(null);
@@ -82,52 +83,59 @@ const PhotoEditor = () => {
         }
     };
 
-    const cropImage = () => {
-        if (cropper) {
-            cropper.crop();
-            const croppedCanvas = cropper.getCroppedCanvas();
-            const previewImg = previewImgRef.current;
-            previewImg.src = croppedCanvas.toDataURL();
-            cropper.destroy();
-            setCropper(null);
-        }
-    };
-
     const dataURLToBlob = (dataURL) => {
         const parts = dataURL.split(';base64,');
         const contentType = parts[0].split(':')[1];
         const raw = window.atob(parts[1]);
         const rawLength = raw.length;
         const uInt8Array = new Uint8Array(rawLength);
-    
+
         for (let i = 0; i < rawLength; ++i) {
             uInt8Array[i] = raw.charCodeAt(i);
         }
-    
+
         return new Blob([uInt8Array], { type: contentType });
     };
-    
-    const uploadImage = async (blob) => {
+
+    const sendToBackend = async (blob, chatInput) => {
         const formData = new FormData();
-        formData.append('image', blob);
-    
+        if (blob) {
+            formData.append('image', blob);
+        }
+        formData.append('chatInput', chatInput);
+
         try {
             const response = await fetch('/upload-endpoint', {  // Replace with your backend URL
                 method: 'POST',
                 body: formData
             });
-    
+
             if (response.ok) {
                 const result = await response.json();
-                console.log('Image uploaded successfully:', result);
+                console.log('Data uploaded successfully:', result);
             } else {
-                console.error('Image upload failed:', response.statusText);
+                console.error('Data upload failed:', response.statusText);
             }
         } catch (error) {
-            console.error('Error uploading image:', error);
+            console.error('Error uploading data:', error);
         }
     };
-    
+
+    const cropImage = () => {
+        if (cropper) {
+            cropper.crop();
+            const croppedCanvas = cropper.getCroppedCanvas();
+            const previewImg = previewImgRef.current;
+            const dataURL = croppedCanvas.toDataURL();
+            previewImg.src = dataURL;
+
+            const blob = dataURLToBlob(dataURL);
+            sendToBackend(blob, chatInput);
+
+            cropper.destroy();
+            setCropper(null);
+        }
+    };
 
     return (
         <div className="container disable">
@@ -181,6 +189,14 @@ const PhotoEditor = () => {
                             )}
                             {activePanel === 'ai' && (
                                 <>
+                                    <div className="chatbox">
+                                        <textarea 
+                                            value={chatInput}
+                                            onChange={(e) => setChatInput(e.target.value)}
+                                            placeholder="Enter your text here..."
+                                        />
+                                        <button onClick={() => sen23dToBackend(null, chatInput)}>Send Chat</button>
+                                    </div>
                                     <button className="masking-button" onClick={() => setActivePanel('masking')}>Masking</button>
                                     <button className="style-transfer-button" onClick={() => setActivePanel('styleTransfer')}>Style Transfer</button>
                                 </>
