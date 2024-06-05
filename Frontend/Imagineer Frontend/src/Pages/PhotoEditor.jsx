@@ -107,6 +107,27 @@ const PhotoEditor = () => {
         return new Blob([uInt8Array], { type: contentType });
     };
     
+    const uploadImage = async (blob) => {
+        const formData = new FormData();
+        formData.append('image', blob);
+    
+        try {
+            const response = await fetch('/upload-endpoint', {  // Replace with your backend URL
+                method: 'POST',
+                body: formData
+            });
+    
+            if (response.ok) {
+                const result = await response.json();
+                console.log('Image uploaded successfully:', result);
+            } else {
+                console.error('Image upload failed:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error uploading image:', error);
+        }
+    };
+    
 
     return (
         <div className="container disable">
