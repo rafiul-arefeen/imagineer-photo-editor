@@ -1,6 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Cropper from 'cropperjs';
-import 'cropperjs/dist/cropper.css';
+// import 'cropperjs/dist/cropper.css';
+import saveImage from '../Functions/SaveImage';
+import "../assets/css/PhotoEditor.css";
+import 'boxicons/css/boxicons.min.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const PhotoEditor = () => {
     const [activePanel, setActivePanel] = useState('general');
@@ -15,6 +19,8 @@ const PhotoEditor = () => {
     const [flipHorizontal, setFlipHorizontal] = useState(1);
     const [flipVertical, setFlipVertical] = useState(1);
     const [cropper, setCropper] = useState(null);
+    const [chatInput, setChatInput] = useState('');
+    const [generatedImageUrl, setGeneratedImageUrl] = useState('');
 
     const previewImgRef = useRef(null);
     const fileInputRef = useRef(null);
@@ -80,12 +86,77 @@ const PhotoEditor = () => {
         }
     };
 
+    const dataURLToBlob = (dataURL) => {
+        const parts = dataURL.split(';base64,');
+        const contentType = parts[0].split(':')[1];
+        const raw = window.atob(parts[1]);
+        const rawLength = raw.length;
+        const uInt8Array = new Uint8Array(rawLength);
+
+        for (let i = 0; i < rawLength; ++i) {
+            uInt8Array[i] = raw.charCodeAt(i);
+        }
+
+        return new Blob([uInt8Array], { type: contentType });
+    };
+
+    const sendToBackend = async (blob, chatInput) => {
+        const formData = new FormData();
+        if (blob) {
+            formData.append('image', blob);
+        }
+        formData.append('chatInput', chatInput);
+
+        try {
+            const response = await fetch('/upload-endpoint', {  // Replace with your backend URL
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                console.log('Data uploaded successfully:', result);
+            } else {
+                console.error('Data upload failed:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error uploading data:', error);
+        }
+    };
+
+    const sendChatToBackend = async (chatInput) => {
+        try {
+            const response = await fetch('http://localhost:5000/generate-image-from-text', {  // Replace with your backend URL
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ prompt: chatInput })
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                setGeneratedImageUrl(result.url);
+                console.log('Image generated successfully:', result);
+            } else {
+                console.error('Image generation failed:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error generating image:', error);
+        }
+    };
+
     const cropImage = () => {
         if (cropper) {
             cropper.crop();
             const croppedCanvas = cropper.getCroppedCanvas();
             const previewImg = previewImgRef.current;
-            previewImg.src = croppedCanvas.toDataURL();
+            const dataURL = croppedCanvas.toDataURL();
+            previewImg.src = dataURL;
+
+            const blob = dataURLToBlob(dataURL);
+            sendToBackend(blob, chatInput);
+
             cropper.destroy();
             setCropper(null);
         }
@@ -143,6 +214,14 @@ const PhotoEditor = () => {
                             )}
                             {activePanel === 'ai' && (
                                 <>
+                                    <div className="chatbox">
+                                        <textarea 
+                                            value={chatInput}
+                                            onChange={(e) => setChatInput(e.target.value)}
+                                            placeholder="Enter your text here..."
+                                        />
+                                        <button onClick={() => sendChatToBackend(chatInput)}>Send Chat</button>
+                                    </div>
                                     <button className="masking-button" onClick={() => setActivePanel('masking')}>Masking</button>
                                     <button className="style-transfer-button" onClick={() => setActivePanel('styleTransfer')}>Style Transfer</button>
                                 </>
@@ -161,6 +240,12 @@ const PhotoEditor = () => {
                 <div className="preview-img">
                     <img ref={previewImgRef} alt="Preview" />
                 </div>
+                {generatedImageUrl && (
+                    <div className="generated-image">
+                        <h3>Generated Image:</h3>
+                        <img src={generatedImageUrl} alt="Generated" />
+                    </div>
+                )}
             </div>
         </div>
     );

@@ -1,6 +1,9 @@
 from openai import OpenAI
+from dotenv import load_dotenv
 
-llm_client = OpenAI(api_key="api-key")
+load_dotenv()
+
+llm_client = OpenAI()
 
 # Creating variation of the input image
 def create_image_variation(image_path, n=1, size="512x512"):
@@ -12,7 +15,7 @@ def create_image_variation(image_path, n=1, size="512x512"):
     )
     return response.data[0].url
 
-def generate_image_from_text(prompt, model="dall-e-3", n=1, size="512x512"):
+def generate_image_from_text(prompt, model="dall-e-3", n=1, size="1024x1024"):
     response = llm_client.images.generate(
         model=model,
         prompt=prompt,
@@ -20,3 +23,6 @@ def generate_image_from_text(prompt, model="dall-e-3", n=1, size="512x512"):
         size=size
     )
     return response.data[0].url
+
+
+print(generate_image_from_text("Generate a cat image"))
