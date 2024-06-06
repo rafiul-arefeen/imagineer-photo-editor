@@ -1,26 +1,39 @@
 from flask import Flask, request, jsonify
 from openai import OpenAI
+from flask_cors import CORS
 import os
 from dotenv import load_dotenv
-
+from PIL import Image
 
 load_dotenv()
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
 
 # Replace with your actual OpenAI API key
 llm_client = OpenAI()
 
+# Function to resize image to 512x512
+def resize_image(image_path, size=(512, 512)):
+    with Image.open(image_path) as img:
+        img = img.resize(size, Image.ANTIALIAS)
+        resized_image_path = os.path.join("/tmp", "resized_" + os.path.basename(image_path))
+        img.save(resized_image_path)
+    return resized_image_path
+
 # Creating variation of the input image
 def create_image_variation(image_path, n=1, size="512x512"):
-    response = llm_client.images.create_variation(
-        image=open(image_path, "rb"),
-        n=n,
-        size=size
-    )
+    resized_image_path = resize_image(image_path)
+    with open(resized_image_path, "rb") as image_file:
+        response = llm_client.images.create_variation(
+            image=image_file,
+            n=n,
+            size=size
+        )
+    os.remove(resized_image_path)
     return response.data[0].url
 
-def generate_image_from_text(prompt, model="dall-e-3", n=1, size="512x512"):
+def generate_image_from_text(prompt, model="dall-e-3", n=1, size="1024x1024"):
     response = llm_client.images.generate(
         model=model,
         prompt=prompt,
@@ -55,15 +68,15 @@ def handle_generate_image_from_text():
     prompt = request.json.get('prompt')
     if not prompt:
         return jsonify({'error': 'Prompt is required'}), 400
-
-    model = request.json.get('model', 'dall-e-3')
-    n = request.json.get('n', 1)
-    size = request.json.get('size', '512x512')
+    
+    print(prompt)
 
     try:
-        url = generate_image_from_text(prompt, model, n, size)
+        url = generate_image_from_text(prompt)
+        print(url)
         return jsonify({'url': url})
     except Exception as e:
+        print("My bad")
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
