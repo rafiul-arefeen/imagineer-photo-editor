@@ -3,8 +3,8 @@ import numpy as np
 from ultralytics import YOLO
 from openai import OpenAI
 from json import loads
+import requests
 
-# Initialize the OpenAI client and model
 llm_client = OpenAI(api_key="api-key")
 llm_model = "gpt-3.5-turbo-0125"
 user_prompt = None
@@ -67,17 +67,20 @@ def get_object_info(data):
         return edit_image_with_openai(img_src, 'transparent_image.png', user_prompt)
     else:
         return "Object not found in the image."
+def load_image_from_url(url):
+    response = requests.get(url)
+    if response.status_code == 200:
+        image_array = np.asarray(bytearray(response.content), dtype="uint8")
+        image = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
+        return image
+    else:
+        print("Error: Unable to download image")
+        return None
 
-# def refine_prompt(user_content):
-#     system_prompt = "Your task is to refine the prompt by excluding the name of the object and retaining the rest of the user's prompt."
-#     response = llm_client.chat.completions.create(
-#         model="gpt-4",
-#         messages=[
-#             {"role": "system", "content": system_prompt},
-#             {"role": "user", "content": user_content}
-#         ]
-#     )
-#     return response.choices[0].message.content
+def save_image(image, path):
+    image = cv2.resize(image,(512,512))
+    cv2.imwrite(path, image)
+
 
 def refine_prompt(user_content):
     system_prompt = "Your task is to extract the first sentence of the user's prompt."
@@ -128,7 +131,9 @@ message_history = []
 
 def predict(image, user_question):
     global user_prompt, img_src
-    img_src = image
+    image = load_image_from_url(image)
+    img_src = 'downloaded_image.png'
+    save_image(image, img_src)
     user_prompt = refine_prompt(user_question)
     print(user_prompt)
     message_history.append({'role': 'user', 'content': user_question})
@@ -145,6 +150,3 @@ def predict(image, user_question):
         function_response = function_to_call(function_args)
         if function_response is not None:
             return {"data_url":function_response,"reply": "The image transformation has been applied"}
-
-# Example of Chat Usage
-print(predict("person.png", "Fill with the surrounding background of the image. The object name to be replaced is the person"))
