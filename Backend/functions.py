@@ -35,9 +35,11 @@ def save_image(image, path):
 
 
 def create_image_variation(image_path, n=1, size="512x512"):
-    image = load_image_from_url(image_path)
-    image_path = 'downloaded_image.png'
-    save_image(image, image_path)
+    # image = load_image_from_url(image_path)
+    # image_path = 'downloaded_image.png'
+    # save_image(image, image_path)
+    print(image_path)
+    # image_path = r"F:\Work\Web Development\imagineer-photo-editor\images\456.png"
 
     with open(image_path, 'rb') as image_file:
         response = llm_client.images.create_variation(
@@ -45,6 +47,8 @@ def create_image_variation(image_path, n=1, size="512x512"):
             n=n,
             size=size
         )
+    
+    
     return response.data[0].url
 
 

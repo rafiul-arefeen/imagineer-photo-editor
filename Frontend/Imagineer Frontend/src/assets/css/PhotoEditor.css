@@ -171,7 +171,8 @@ body {
     justify-content: center;
     width: calc(100% / 4 - 3px);
 }
-
+.rotate .options button:nth-child(1),
+.rotate .options button:nth-child(2),
 .rotate .options button:nth-child(3),
 .rotate .options button:nth-child(4) {
     font-size: 18px;
@@ -201,7 +202,7 @@ body {
     margin-right: 10px;
     display: flex;
     width: 70vw;
-    height: 75vh;
+    height: 77vh;
     overflow: hidden;
     border-radius: 5px;
     align-items: top;
@@ -411,10 +412,12 @@ STYLE TRANSFER SETTINGS
     margin-bottom: 10px;
 }
 
+
 .controls button {
     padding: 11px 20px;
     font-size: 14px;
     border-radius: 3px;
+    margin-top:5px;
     outline: none;
     color: #fff;
     cursor: pointer;
@@ -439,7 +442,7 @@ STYLE TRANSFER SETTINGS
 }
 
 .controls .save-img {
-    margin-left: 5px;
+    /* margin-left: 5px; */
     background: #ff0000;
     border: 1px solid #ff0000;
 }
@@ -447,6 +450,11 @@ STYLE TRANSFER SETTINGS
 #confirmCropButton[disabled] {
     opacity: 0.5;
     pointer-events: none;
+}
+
+.chatbox {
+    display: flex;
+    flex-direction: column;
 }
 
 
@@ -502,6 +510,29 @@ HIDING PANELS AT LAUNCH
     }
 } */
 
+.ai-options, .controls{
+    display : flex;
+    flex-direction: column;
+
+}
+
+.ai-options button{
+    padding: 11px 20px;
+    font-size: 14px;
+    border-radius: 3px;
+    margin-top:5px;
+    outline: none;
+    color: #282828;
+    cursor: pointer;
+    background: none;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.ai-options button:hover{
+    background-color: #ff9d00;
+    color: white;
+}
 @media screen and (orientation: portrait) {
     .container h2 {
         text-align: center;
@@ -524,7 +555,7 @@ HIDING PANELS AT LAUNCH
         order: 1;
     }
 
-    .controls button {
+    /* .controls button {
         width: 100%;
         margin-bottom: 10px;
     }
@@ -540,5 +571,5 @@ HIDING PANELS AT LAUNCH
 
     .controls .reset-filter {
         margin-top: 30px;
-    }
+    } */
 }

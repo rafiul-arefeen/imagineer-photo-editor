@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Cropper from 'cropperjs';
-// import 'cropperjs/dist/cropper.css';
-import saveImage from '../Functions/SaveImage';
+import 'cropperjs/dist/cropper.css';
 import "../assets/css/PhotoEditor.css";
 import 'boxicons/css/boxicons.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
@@ -22,12 +21,15 @@ const PhotoEditor = () => {
     const [cropper, setCropper] = useState(null);
     const [chatInput, setChatInput] = useState('');
     const [generatedImageUrl, setGeneratedImageUrl] = useState('');
+    const [fileName, setFileName] = useState('');
 
     const previewImgRef = useRef(null);
     const fileInputRef = useRef(null);
 
     const loadImage = (event) => {
         const file = event.target.files[0];
+        setFileName(file.name);
+        // console.log(file.name);
         if (!file) return;
         const previewImg = previewImgRef.current;
         previewImg.src = URL.createObjectURL(file);
@@ -35,6 +37,45 @@ const PhotoEditor = () => {
             resetFilter();
             document.querySelector(".container").classList.remove("disable");
         };
+    };
+
+    // console.log("Hello" + fileName);
+
+    const saveImage = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const previewImg = previewImgRef.current;
+    
+        let canvasWidth = previewImg.naturalWidth;
+        let canvasHeight = previewImg.naturalHeight;
+        if (rotate % 180 !== 0) {
+            [canvasWidth, canvasHeight] = [canvasHeight, canvasWidth];
+        }
+        canvas.width = canvasWidth;
+        canvas.height = canvasHeight;
+    
+        ctx.filter = `
+            brightness(${brightness}%)
+            contrast(${contrast}%)
+            saturate(${saturation}%)
+            invert(${inversion}%)
+            grayscale(${grayscale}%)
+            sepia(${sepia}%)
+        `;
+        ctx.translate(canvas.width / 2, canvas.height / 2);
+        if (rotate !== 0) {
+            ctx.rotate(rotate * Math.PI / 180);
+        }
+        ctx.scale(flipHorizontal, flipVertical);
+    
+        const offsetX = -previewImg.naturalWidth / 2;
+        const offsetY = -previewImg.naturalHeight / 2;
+        ctx.drawImage(previewImg, offsetX, offsetY);
+    
+        const link = document.createElement('a');
+        link.download = 'image.jpg';
+        link.href = canvas.toDataURL();
+        link.click();
     };
 
     const applyFilter = () => {
@@ -120,6 +161,7 @@ const PhotoEditor = () => {
             const [key, value] = entry;
             console.log(`${key}: ${value}`);
         }
+        console.log(`Endpoint: ${endpoint}`);
         
     
         try {
@@ -157,17 +199,17 @@ const PhotoEditor = () => {
             case 'imageInpainting':
                 console.log("Doing imageInpainting");
                 endpoint = 'http://localhost:5000/image-inpainting-endpoint'; // Replace with your actual endpoint
-                blob = dataURLToBlob(previewImgRef.current.src);
+                blob = fileName;
                 break;
             case 'styleVariation':
                 console.log("Doing styleVariation");
                 endpoint = 'http://localhost:5000/style-variation-endpoint'; // Replace with your actual endpoint
-                blob = dataURLToBlob(previewImgRef.current.src);
+                blob = fileName;
                 break;
             case 'objectRemoval':
                 console.log("Doing objectRemoval");
                 endpoint = 'http://localhost:5000/object-removal-endpoint'; // Replace with your actual endpoint
-                blob = dataURLToBlob(previewImgRef.current.src);
+                blob = fileName;
                 break;
             default:
                 return;
@@ -257,10 +299,10 @@ const PhotoEditor = () => {
                                     <div className="rotate">
                                         <label className="title">Rotate & Flip</label>
                                         <div className="options">
-                                            <button onClick={() => setRotate(rotate - 90)}>Rotate Left</button>
-                                            <button onClick={() => setRotate(rotate + 90)}>Rotate Right</button>
-                                            <button onClick={() => setFlipHorizontal(flipHorizontal === 1 ? -1 : 1)}>Flip Horizontal</button>
-                                            <button onClick={() => setFlipVertical(flipVertical === 1 ? -1 : 1)}>Flip Vertical</button>
+                                            <button onClick={() => setRotate(rotate - 90)}>L</button>
+                                            <button onClick={() => setRotate(rotate + 90)}>R</button>
+                                            <button onClick={() => setFlipHorizontal(flipHorizontal === 1 ? -1 : 1)}>H</button>
+                                            <button onClick={() => setFlipVertical(flipVertical === 1 ? -1 : 1)}>V</button>
                                         </div>
                                     </div>
                                 </>
@@ -269,7 +311,6 @@ const PhotoEditor = () => {
                                 <>
                                     <div className="ai-options">
                                         <button onClick={() => setActiveSection('generatingImage')}>Generating Image</button>
-                                        <button onClick={() => setActiveSection('imageInpainting')}>Image Inpainting</button>
                                         <button onClick={() => setActiveSection('styleVariation')}>Style Variation</button>
                                         <button onClick={() => setActiveSection('objectRemoval')}>Object Removal</button>
                                     </div>

@@ -20,7 +20,7 @@ label_list = [
     "scissors", "teddy bear", "hair drier", "toothbrush"
 ]
 
-def detect_and_save(query, model_path="yolov8n.pt", image_path="person.png"):
+def detect_and_save(query, model_path=r"F:\Work\Web Development\imagineer-photo-editor\helper_functions\yolov8n.pt", image_path="person.png"):
     model = YOLO(model_path)
     label_names = label_list
 
@@ -147,4 +147,4 @@ def predict(image, user_question):
             return {"data_url":function_response,"reply": "The image transformation has been applied"}
 
 # Example of Chat Usage
-print(predict("person.png", "Fill with the surrounding background of the image. The object name to be replaced is the person"))
+# print(predict("person.png", "Fill with the surrounding background of the image. The object name to be replaced is the person"))
