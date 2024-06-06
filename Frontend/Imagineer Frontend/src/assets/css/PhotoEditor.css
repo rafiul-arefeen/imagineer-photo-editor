@@ -368,16 +368,16 @@ STYLE TRANSFER SETTINGS
     overflow: hidden;
 }
 
-.style-transfer-panel .title {
-    display: block;
-    font-size: 20px;
-    margin-bottom: 12px;
-}
-
 .style-transfer-panel .style-button {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+.style-transfer-panel .title {
+    display: block;
+    font-size: 20px;
+    margin-bottom: 12px;
 }
 
 .style-transfer-panel button {
