@@ -63,15 +63,22 @@ function applyFilter()
 
 // Update slider values
 
+
+function updateInversion() 
+{
+    inversion = inversionSlider.value;
+    applyFilter();
+}
+
 function updateBrightness() 
 {
     brightness = brightnessSlider.value;
     applyFilter();
 }
 
-function updateInversion() 
+function updateGrayscale() 
 {
-    inversion = inversionSlider.value;
+    grayscale = grayscaleSlider.value;
     applyFilter();
 }
 
@@ -81,11 +88,6 @@ function updateSaturation()
     applyFilter();
 }
 
-function updateGrayscale() 
-{
-    grayscale = grayscaleSlider.value;
-    applyFilter();
-}
 
 function updateContrast() 
 {
@@ -105,15 +107,6 @@ function updateBlur()
     applyFilter();
 }
 
-function cropImage() 
-{
-    cropper.crop();
-    const croppedCanvas = cropper.getCroppedCanvas();
-    previewImg.src = croppedCanvas.toDataURL();
-    cropper.destroy();
-    cropper = null;
-    confirmCropButton.disabled = true;
-}
 
 function openCropOverlay() 
 {
@@ -132,6 +125,16 @@ function openCropOverlay()
         });
         confirmCropButton.disabled = false;
     }
+}
+
+function cropImage() 
+{
+    cropper.crop();
+    const croppedCanvas = cropper.getCroppedCanvas();
+    previewImg.src = croppedCanvas.toDataURL();
+    cropper.destroy();
+    cropper = null;
+    confirmCropButton.disabled = true;
 }
 
 
