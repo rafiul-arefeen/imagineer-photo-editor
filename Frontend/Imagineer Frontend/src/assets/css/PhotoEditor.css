@@ -323,11 +323,11 @@ SETTINGS FOR MASKING MENU
     border-style: none;
 }
 
-.masking-button .mask-subject-button:hover {
+.masking-button .mask-background-button:hover {
     background-color: #6C757D;
 }
 
-.masking-button .mask-background-button:hover {
+.masking-button .mask-subject-button:hover {
     background-color: #6C757D;
 }
 
