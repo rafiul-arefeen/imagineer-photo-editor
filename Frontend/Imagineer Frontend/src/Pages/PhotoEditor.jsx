@@ -8,6 +8,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const PhotoEditor = () => {
     const [activePanel, setActivePanel] = useState('general');
+    const [activeSection, setActiveSection] = useState(null);
     const [brightness, setBrightness] = useState(100);
     const [saturation, setSaturation] = useState(100);
     const [inversion, setInversion] = useState(0);
@@ -87,34 +88,54 @@ const PhotoEditor = () => {
     };
 
     const dataURLToBlob = (dataURL) => {
-        const parts = dataURL.split(';base64,');
+        const BASE64_MARKER = ';base64,';
+        if (dataURL.indexOf(BASE64_MARKER) === -1) {
+            const parts = dataURL.split(',');
+            const contentType = parts[0].split(':')[1];
+            const raw = decodeURIComponent(parts[1]);
+            return new Blob([raw], { type: contentType });
+        }
+    
+        const parts = dataURL.split(BASE64_MARKER);
         const contentType = parts[0].split(':')[1];
         const raw = window.atob(parts[1]);
         const rawLength = raw.length;
+    
         const uInt8Array = new Uint8Array(rawLength);
-
         for (let i = 0; i < rawLength; ++i) {
             uInt8Array[i] = raw.charCodeAt(i);
         }
-
+        
         return new Blob([uInt8Array], { type: contentType });
     };
 
-    const sendToBackend = async (blob, chatInput) => {
+    const sendToBackend = async (blob, chatInput, endpoint) => {
         const formData = new FormData();
         if (blob) {
             formData.append('image', blob);
         }
-        formData.append('chatInput', chatInput);
+        formData.append('prompt', chatInput);
 
+        for (const entry of formData.entries()) {
+            const [key, value] = entry;
+            console.log(`${key}: ${value}`);
+        }
+        
+    
         try {
-            const response = await fetch('/upload-endpoint', {  // Replace with your backend URL
+            
+            const response = await fetch(endpoint, {
                 method: 'POST',
                 body: formData
+
+                
             });
+            
+            
 
             if (response.ok) {
                 const result = await response.json();
+                setGeneratedImageUrl(result.url);
                 console.log('Data uploaded successfully:', result);
             } else {
                 console.error('Data upload failed:', response.statusText);
@@ -123,28 +144,60 @@ const PhotoEditor = () => {
             console.error('Error uploading data:', error);
         }
     };
-
+    
     const sendChatToBackend = async (chatInput) => {
-        try {
-            const response = await fetch('http://localhost:5000/generate-image-from-text', {  // Replace with your backend URL
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ prompt: chatInput })
-            });
-
-            if (response.ok) {
-                const result = await response.json();
-                setGeneratedImageUrl(result.url);
-                console.log('Image generated successfully:', result);
-            } else {
-                console.error('Image generation failed:', response.statusText);
+        let endpoint;
+        let blob = null;
+    
+        switch (activeSection) {
+            case 'generatingImage':
+                console.log("Doing generatingImage");
+                endpoint = 'http://localhost:5000/generate-image-from-text';
+                break;
+            case 'imageInpainting':
+                console.log("Doing imageInpainting");
+                endpoint = 'http://localhost:5000/image-inpainting-endpoint'; // Replace with your actual endpoint
+                blob = dataURLToBlob(previewImgRef.current.src);
+                break;
+            case 'styleVariation':
+                console.log("Doing styleVariation");
+                endpoint = 'http://localhost:5000/style-variation-endpoint'; // Replace with your actual endpoint
+                blob = dataURLToBlob(previewImgRef.current.src);
+                break;
+            case 'objectRemoval':
+                console.log("Doing objectRemoval");
+                endpoint = 'http://localhost:5000/object-removal-endpoint'; // Replace with your actual endpoint
+                blob = dataURLToBlob(previewImgRef.current.src);
+                break;
+            default:
+                return;
+        }
+    
+        if (activeSection === 'generatingImage') {
+            try {
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ prompt: chatInput })
+                });
+    
+                if (response.ok) {
+                    const result = await response.json();
+                    setGeneratedImageUrl(result.url);
+                    console.log('Image processed successfully:', result);
+                } else {
+                    console.error('Image processing failed:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error processing image:', error);
             }
-        } catch (error) {
-            console.error('Error generating image:', error);
+        } else {
+            await sendToBackend(blob, chatInput, endpoint);
         }
     };
+    
 
     const cropImage = () => {
         if (cropper) {
@@ -214,20 +267,24 @@ const PhotoEditor = () => {
                             )}
                             {activePanel === 'ai' && (
                                 <>
-                                    <div className="chatbox">
-                                        <textarea 
-                                            value={chatInput}
-                                            onChange={(e) => setChatInput(e.target.value)}
-                                            placeholder="Enter your text here..."
-                                        />
-                                        <button onClick={() => sendChatToBackend(chatInput)}>Send Chat</button>
+                                    <div className="ai-options">
+                                        <button onClick={() => setActiveSection('generatingImage')}>Generating Image</button>
+                                        <button onClick={() => setActiveSection('imageInpainting')}>Image Inpainting</button>
+                                        <button onClick={() => setActiveSection('styleVariation')}>Style Variation</button>
+                                        <button onClick={() => setActiveSection('objectRemoval')}>Object Removal</button>
                                     </div>
-                                    <button className="masking-button" onClick={() => setActivePanel('masking')}>Masking</button>
-                                    <button className="style-transfer-button" onClick={() => setActivePanel('styleTransfer')}>Style Transfer</button>
+                                    {activeSection && (
+                                        <div className="chatbox">
+                                            <textarea 
+                                                value={chatInput}
+                                                onChange={(e) => setChatInput(e.target.value)}
+                                                placeholder="Enter your text here..."
+                                            />
+                                            <button onClick={() => sendChatToBackend(chatInput)}>Send Chat</button>
+                                        </div>
+                                    )}
                                 </>
                             )}
-                            {activePanel === 'masking' && <div className="masking-panel">Masking Content</div>}
-                            {activePanel === 'styleTransfer' && <div className="style-transfer-panel">Style Transfer Content</div>}
                         </div>
                     </div>
                     <div className="controls">
