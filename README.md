@@ -45,3 +45,19 @@ Imagineer is a web-based photo editor built using HTML, CSS, and JavaScript. It 
   -	Style Variation: To create different versions of your current image.
   -	Generate Image: To generate a completely new image based on your text prompt.
   -	Object Removal: To remove an object from your photo.
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgements
+This is made as the final project for CSE 4408: System Analysis and Design Lab.
+
+**The InnoVisionaries**
+
+[Rafiul Arefeen Islam | 210041114](https://github.com/rafiul-arefeen)
+
+[Adib Ahmed | 210041122](https://github.com/AdibOmi)
+
+[Md. Rifat Sarwar | 210041134](https://github.com/MetheMeticien)
+
+[Wasif Uddin | 210041144](https://github.com/wasifuddin)
