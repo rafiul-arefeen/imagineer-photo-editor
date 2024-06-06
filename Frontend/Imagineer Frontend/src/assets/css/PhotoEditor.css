@@ -305,6 +305,11 @@ SETTINGS FOR MASKING MENU
     justify-content: space-between;
 }
 
+.masking-button .mask-subject-button {
+    background-color: #21C3D1;
+    margin-bottom: 10px;
+}
+
 .masking-panel button {
     padding: 11px 20px;
     font-size: 14px;
@@ -316,11 +321,6 @@ SETTINGS FOR MASKING MENU
     transition: all 0.3s ease;
     text-transform: uppercase;
     border-style: none;
-}
-
-.masking-button .mask-subject-button {
-    background-color: #21C3D1;
-    margin-bottom: 10px;
 }
 
 .masking-button .mask-subject-button:hover {
