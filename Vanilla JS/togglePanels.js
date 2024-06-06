@@ -35,19 +35,14 @@ maskingButton.addEventListener('click', () => {
     showMaskingPanel();
 });
 
-function showGeneralPanel() {
-    const editorPanel = document.querySelector('.editor-panel');
-    editorPanel.style.display = 'block';
-}
-
 function hideGeneralPanel() {
     const editorPanel = document.querySelector('.editor-panel');
     editorPanel.style.display = 'none';
 }
 
-function showAIPanel() {
-    const aiPanel = document.querySelector('.ai-menu');
-    aiPanel.style.display = 'block';
+function showGeneralPanel() {
+    const editorPanel = document.querySelector('.editor-panel');
+    editorPanel.style.display = 'block';
 }
 
 function hideAIPanel() {
@@ -55,9 +50,9 @@ function hideAIPanel() {
     aiPanel.style.display = 'none';
 }
 
-function showMaskingPanel() {
-    const maskingPanel = document.querySelector('.masking-panel');
-    maskingPanel.style.display = 'block';
+function showAIPanel() {
+    const aiPanel = document.querySelector('.ai-menu');
+    aiPanel.style.display = 'block';
 }
 
 function hideMaskingPanel() {
@@ -65,12 +60,17 @@ function hideMaskingPanel() {
     maskingPanel.style.display = 'none';
 }
 
-function showStyleTransferPanel() {
-    const styleTransferPanel = document.querySelector('.style-transfer-panel');
-    styleTransferPanel.style.display = 'block';
+function showMaskingPanel() {
+    const maskingPanel = document.querySelector('.masking-panel');
+    maskingPanel.style.display = 'block';
 }
 
 function hideStyleTransferPanel() {
     const styleTransferPanel = document.querySelector('.style-transfer-panel');
     styleTransferPanel.style.display = 'none';
+}
+
+function showStyleTransferPanel() {
+    const styleTransferPanel = document.querySelector('.style-transfer-panel');
+    styleTransferPanel.style.display = 'block';
 }

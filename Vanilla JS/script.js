@@ -69,16 +69,15 @@ function updateBrightness()
     applyFilter();
 }
 
+function updateInversion() 
+{
+    inversion = inversionSlider.value;
+    applyFilter();
+}
 
 function updateSaturation() 
 {
     saturation = saturationSlider.value;
-    applyFilter();
-}
-
-function updateInversion() 
-{
-    inversion = inversionSlider.value;
     applyFilter();
 }
 
@@ -94,16 +93,26 @@ function updateContrast()
     applyFilter();
 }
 
+function updateSepia() 
+{
+    sepiaValue = sepiaSlider.value;
+    applyFilter();
+}
+
 function updateBlur() 
 {
     blurValue = blurSlider.value;
     applyFilter();
 }
 
-function updateSepia() 
+function cropImage() 
 {
-    sepiaValue = sepiaSlider.value;
-    applyFilter();
+    cropper.crop();
+    const croppedCanvas = cropper.getCroppedCanvas();
+    previewImg.src = croppedCanvas.toDataURL();
+    cropper.destroy();
+    cropper = null;
+    confirmCropButton.disabled = true;
 }
 
 function openCropOverlay() 
@@ -123,16 +132,6 @@ function openCropOverlay()
         });
         confirmCropButton.disabled = false;
     }
-}
-
-function cropImage() 
-{
-    cropper.crop();
-    const croppedCanvas = cropper.getCroppedCanvas();
-    previewImg.src = croppedCanvas.toDataURL();
-    cropper.destroy();
-    cropper = null;
-    confirmCropButton.disabled = true;
 }
 
 

@@ -47,6 +47,28 @@ body
     pointer-events: none;
 }
 
+.editor-container .top-row 
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.editor-container .top-row button 
+{
+    padding: 11px 20px;
+    width: 135px;
+    border-radius: 3px;
+    outline: none;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    border-style: none;
+    color: #000000;
+    cursor: pointer;
+}
+
 .container h2
  {
     font-size:22px;
@@ -72,28 +94,6 @@ body
     justify-content: space-between;
     order: 2;
 
-}
-
-.editor-container .top-row 
-{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: 10px;
-}
-
-.editor-container .top-row button 
-{
-    padding: 11px 20px;
-    width: 135px;
-    border-radius: 3px;
-    outline: none;
-    font-size: 14px;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    border-style: none;
-    color: #000000;
-    cursor: pointer;
 }
 
 .top-row .general-panel:hover 
@@ -147,6 +147,20 @@ body
     justify-content: space-between;
 }
 
+
+.filter button.active 
+{
+
+    color: #fff;
+    border-color: #21C3D1;
+    background: #21C3D1;
+}
+
+.filter .slider 
+{
+    margin-top: 12px;
+}
+
 .editor-panel-content button 
 {
     height: 40px;
@@ -167,19 +181,6 @@ body
 .editor-panel-content button:hover
  {
     background: #f5f5f5;
-}
-
-.filter button.active 
-{
-
-    color: #fff;
-    border-color: #21C3D1;
-    background: #21C3D1;
-}
-
-.filter .slider 
-{
-    margin-top: 12px;
 }
 
 
